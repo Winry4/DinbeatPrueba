@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "339960123508",
+    "project_id": "fir-pruebarebeca",
+    "storage_bucket": "fir-pruebarebeca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:339960123508:android:78f265aa45ed19f3c60121",
+        "android_client_info": {
+          "package_name": "com.example.firebase_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "339960123508-0fe4l8e1mkqkmndis5vk5i8jth7qi632.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_test",
+            "certificate_hash": "3cb400bb5b3963c07333e953fbe47756962c91de"
+          }
+        },
+        {
+          "client_id": "339960123508-927dl051ldeugmmu9htm354jphecvqt1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAN_5xbvOjMMcIMBPcReLi69GbyZX8I1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "339960123508-927dl051ldeugmmu9htm354jphecvqt1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
