@@ -1,44 +1,17 @@
-import 'package:firebase_test/src/view/SignUp.dart';
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import '../../firebase_options.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  Future clickLogin() async {
-    FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim());
-  }
-
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  void clickRegister() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const SignUp()),
-    );
-  }
+class SignUp extends StatelessWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final nombreController = TextEditingController();
+    final apellidosController = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -68,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 width: 325,
-                height: 420,
+                height: 480,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -98,8 +71,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 30,
                     ),
                     textF(
+                        nombreController,
+                        "Nombre",
+                        const Icon(
+                          FontAwesomeIcons.person,
+                          color: Colors.red,
+                        )),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    textF(
+                        apellidosController,
+                        "Apellidos",
+                        const Icon(
+                          FontAwesomeIcons.person,
+                          color: Colors.red,
+                        )),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    textF(
                         emailController,
-                        "Email Address",
+                        "Email",
                         const Icon(
                           FontAwesomeIcons.envelope,
                           color: Colors.red,
@@ -108,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 12,
                     ),
                     textF(
-                        emailController,
+                        passwordController,
                         "Password",
                         const Icon(
                           FontAwesomeIcons.eyeSlash,
@@ -118,7 +111,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 30,
                     ),
                     GestureDetector(
-                      onTap: clickLogin,
+                      onTap: () {
+                        clickRegister(
+                            context, emailController, passwordController);
+                      },
                       child: Container(
                         alignment: Alignment.center,
                         width: 250,
@@ -135,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: const Padding(
                           padding: EdgeInsets.all(12.0),
                           child: Text(
-                            'Login',
+                            'Register',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,
@@ -145,18 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 17,
+                      height: 25,
                     ),
-                    TextButton(
-                      onPressed: clickRegister,
-                      child: const Text(
-                        "Sing up",
-                        style: TextStyle(color: Colors.deepOrange),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    )
                   ],
                 ),
               )
@@ -182,5 +168,14 @@ class _LoginScreenState extends State<LoginScreen> {
             )),
       ),
     );
+  }
+
+  void clickRegister(context, TextEditingController emailController,
+      TextEditingController passwordController) {
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
+
+    Navigator.pop(context);
   }
 }

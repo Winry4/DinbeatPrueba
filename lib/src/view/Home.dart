@@ -1,24 +1,24 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_test/src/model/Segment.dart';
+import 'package:firebase_test/src/viewModel/HomeController.dart';
 import 'package:firebase_test/utils/wave_cliper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../utils/App_theme.dart';
-import 'package:string_splitter/string_splitter.dart';
-
-import '../model/FirebaseRead.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
+  String uid;
+
+  Home({Key? key, required this.uid}) : super(key: key);
   @override
-  _HomeState createState() => _HomeState();
+  _HomeState createState() => _HomeState(uid: this.uid);
 }
 
 class _HomeState extends State<Home> {
-  int numberDoc = 0;
+  String uid;
+  _HomeState({required this.uid});
   @override
   Widget build(BuildContext context) {
     double totalHeight = MediaQuery.of(context).size.height;
@@ -72,7 +72,9 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                        onTap: subirArchivo,
+                        onTap: () {
+                          subirArchivo(context);
+                        },
                         child: Container(
                             decoration: BoxDecoration(boxShadow: [
                               BoxShadow(
@@ -131,40 +133,25 @@ class _HomeState extends State<Home> {
             )));
   }
 
-  void graficar() {}
+  void graficar() {
+    Provider.of<HomeController>(context).graphics(context);
+  }
 
-  Future<void> subirArchivo() async {
-    print("subirArchivo");
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-      String data = await file.readAsString();
-
-      final stringParts = StringSplitter.split(
-        data,
-        splitters: [']'],
-        trimParts: true,
-      );
-      print("stringParts " + stringParts.length.toString());
-
-      numberDoc = numberDoc + 1;
-      String docName = "newDocumentRecord_$numberDoc";
-
-      print("docName " + docName);
-      Firebase.sendFirebaseRecord(docName, stringParts.length);
-
-      for (int i = 0; i < stringParts.length; i++) {
-        String dataName = "newDocumentData_$numberDoc" "_$i";
-        Firebase.sendFirebaseData(
-            docName, dataName, stringParts.elementAt(i).replaceAll("[", ""), i);
-      }
-    } else {
-      // User canceled the picker
-    }
+  void subirArchivo(BuildContext context) {
+    Provider.of<HomeController>(context).uploadFile(context, uid);
   }
 
   void logout() {
     FirebaseAuth.instance.signOut();
+  }
+
+  Widget graphicChart(segments) {
+    return SfCartesianChart(primaryXAxis: DateTimeAxis(), series: <ChartSeries>[
+      // Renders line chart
+      LineSeries<Segment, DateTime>(
+          dataSource: segments,
+          xValueMapper: (Segment segment, _) => segment.data,
+          yValueMapper: (Segment segment, _) => segment.data)
+    ]);
   }
 }

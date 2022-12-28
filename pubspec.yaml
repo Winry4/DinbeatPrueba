@@ -41,6 +41,8 @@ dependencies:
   cloud_firestore: ^4.3.0
   file_picker: ^5.2.4
   string_splitter: ^1.0.0+1
+  syncfusion_flutter_charts: ^20.4.38
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

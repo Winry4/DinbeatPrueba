@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Firebase {
-  static void sendFirebaseRecord(docName, totalSegments) {
-    FirebaseFirestore.instance.collection("Records").doc(docName).set(
-        {'UuidUser': "", 'Totalsegments': totalSegments, 'Timestamp:': 20});
+  static void sendFirebaseRecord(docName, totalSegments, uid) {
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    FirebaseFirestore.instance.collection("Records").doc(docName).set({
+      'UuidUser': uid,
+      'Totalsegments': totalSegments,
+      'Timestamp:': timestamp
+    });
   }
 
   static void sendFirebaseData(docName, dataName, data, sequence) {
