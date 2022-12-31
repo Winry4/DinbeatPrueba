@@ -1,5 +1,5 @@
 class Data {
-  String value_Array_number;
+  List value_Array_number;
   String newdocument_record;
   int sequence;
 

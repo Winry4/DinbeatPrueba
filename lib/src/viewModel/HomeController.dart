@@ -34,8 +34,15 @@ class HomeController extends ChangeNotifier {
 
       for (int i = 0; i < stringParts.length - 1; i++) {
         String dataName = "newDocumentData_$numberDoc" "_$i";
-        Firebase.sendFirebaseData(
-            docName, dataName, stringParts.elementAt(i).replaceAll("[", ""), i);
+        String str =
+            stringParts.elementAt(i).replaceAll("[", "").replaceAll(",", "");
+        final svalue = StringSplitter.split(
+          str,
+          splitters: [' '],
+          trimParts: true,
+        );
+        List<int> arrayValue = svalue.map(int.parse).toList();
+        Firebase.sendFirebaseData(docName, dataName, arrayValue, i);
       }
     } else {
       // User canceled the picker
@@ -80,9 +87,8 @@ class HomeController extends ChangeNotifier {
     List<DataGraphic> listG = [];
     int x = 0;
     for (int i = 0; i < listData.length; i++) {
-      List<String> arrayN = listData[i].value_Array_number.split(", ");
-      for (int j = 0; j < arrayN.length; j++) {
-        listG.add(DataGraphic(x, int.parse(arrayN[j])));
+      for (int j = 0; j < listData[i].value_Array_number.length; j++) {
+        listG.add(DataGraphic(x, listData[i].value_Array_number[j]));
         x++;
       }
     }
