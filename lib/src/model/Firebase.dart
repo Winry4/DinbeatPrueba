@@ -20,11 +20,14 @@ class Firebase {
     });
   }
 
-  Stream<List<Records>> readRecords() => FirebaseFirestore.instance
+  static Stream<List<Records>> readRecords() => FirebaseFirestore.instance
       .collection("Records")
       .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => Records.fromJson(doc.data())).toList());
+      .map((snapshot) => snapshot.docs.map((doc) {
+            Records record = Records.fromJson(doc.data());
+            record.name = doc.reference.id;
+            return record;
+          }).toList());
 
   static Stream<List<Data>> readData() =>
       FirebaseFirestore.instance.collection('Data').snapshots().map((snapshot) {

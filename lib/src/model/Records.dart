@@ -2,7 +2,7 @@ class Records {
   int timestamp;
   String uidUser;
   int totalSegments;
-
+  late String name;
   Records(
       {required this.uidUser,
       required this.timestamp,
