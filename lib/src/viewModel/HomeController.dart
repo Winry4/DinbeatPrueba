@@ -26,9 +26,9 @@ class HomeController extends ChangeNotifier {
       numberDoc = numberDoc + 1;
       String docName = "newDocumentRecord_$numberDoc";
 
-      Firebase.sendFirebaseRecord(docName, stringParts.length, uid);
+      Firebase.sendFirebaseRecord(docName, stringParts.length - 1, uid);
 
-      for (int i = 0; i < stringParts.length; i++) {
+      for (int i = 0; i < stringParts.length - 1; i++) {
         String dataName = "newDocumentData_$numberDoc" "_$i";
         Firebase.sendFirebaseData(
             docName, dataName, stringParts.elementAt(i).replaceAll("[", ""), i);

@@ -43,6 +43,7 @@ dependencies:
   string_splitter: ^1.0.0+1
   syncfusion_flutter_charts: ^20.4.38
   provider: ^6.0.5
+  fl_chart: ^0.55.2
 
 dev_dependencies:
   flutter_test:
