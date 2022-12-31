@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 12,
                     ),
                     textF(
-                        emailController,
+                        passwordController,
                         "Password",
                         const Icon(
                           FontAwesomeIcons.eyeSlash,

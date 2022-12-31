@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:firebase_test/src/model/FirebaseRead.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_test/src/model/Firebase.dart';
+import 'package:firebase_test/src/view/Graphic.dart';
 import 'package:flutter/material.dart';
 import 'package:string_splitter/string_splitter.dart';
 import 'package:file_picker/file_picker.dart';
@@ -22,12 +22,10 @@ class HomeController extends ChangeNotifier {
         splitters: [']'],
         trimParts: true,
       );
-      print("stringParts " + stringParts.length.toString());
 
       numberDoc = numberDoc + 1;
       String docName = "newDocumentRecord_$numberDoc";
 
-      print("docName " + docName);
       Firebase.sendFirebaseRecord(docName, stringParts.length, uid);
 
       for (int i = 0; i < stringParts.length; i++) {
@@ -40,5 +38,11 @@ class HomeController extends ChangeNotifier {
     }
   }
 
-  graphics(context) {}
+  void graphicsData(context) {
+    print("Graphics Data ");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Graphic()),
+    );
+  }
 }

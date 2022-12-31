@@ -2,13 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_test/src/view/Home.dart';
 import 'package:firebase_test/src/view/LoginScreen.dart';
+import 'package:firebase_test/src/viewModel/HomeController.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'utils/App_theme.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => HomeController())],
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

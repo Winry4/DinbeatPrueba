@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_test/src/model/Segment.dart';
+import 'package:firebase_test/src/model/DataGraphic.dart';
 import 'package:firebase_test/src/viewModel/HomeController.dart';
 import 'package:firebase_test/utils/wave_cliper.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   String uid;
@@ -134,24 +135,15 @@ class _HomeState extends State<Home> {
   }
 
   void graficar() {
-    Provider.of<HomeController>(context).graphics(context);
+    Provider.of<HomeController>(context, listen: false).graphicsData(context);
   }
 
   void subirArchivo(BuildContext context) {
-    Provider.of<HomeController>(context).uploadFile(context, uid);
+    Provider.of<HomeController>(context, listen: false)
+        .uploadFile(context, uid);
   }
 
   void logout() {
     FirebaseAuth.instance.signOut();
-  }
-
-  Widget graphicChart(segments) {
-    return SfCartesianChart(primaryXAxis: DateTimeAxis(), series: <ChartSeries>[
-      // Renders line chart
-      LineSeries<Segment, DateTime>(
-          dataSource: segments,
-          xValueMapper: (Segment segment, _) => segment.data,
-          yValueMapper: (Segment segment, _) => segment.data)
-    ]);
   }
 }
